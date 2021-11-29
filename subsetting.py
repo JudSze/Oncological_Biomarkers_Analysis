@@ -25,7 +25,7 @@ hm_clust_df.head()
 cell_lines_df=pd.read_table("C:/Egyetem/Szakmai_gyak/Data_tables/cell_lines.csv", sep=';')
 cell_lines_df.head()
 
-subset_hm_clust=pd.merge(hm_clust_df, cell_lines_df)
+subset_hm_clust=pd.merge(cell_lines_df, hm_clust_df)
 subset_hm_clust
 
 subset_hm_clust.to_csv("C:/Egyetem/Szakmai_gyak/Data_tables/clustered_r.csv", sep=";")
@@ -33,11 +33,16 @@ subset_hm_clust.to_csv("C:/Egyetem/Szakmai_gyak/Data_tables/clustered_r.csv", se
 """Assigning subtissues"""
 sub_tss_df=pd.read_table("C:/Egyetem/Szakmai_gyak/Data_tables/sub_tissues.csv", sep=';')
 sub_tss_df.head()
+sub_tss_df
 
 clustered_df=pd.read_table("C:/Egyetem/Szakmai_gyak/Data_tables/clustered_r.csv", sep=';')
 clustered_df.head()
+clustered_df
 
 subset_sub_tss=pd.merge(sub_tss_df, clustered_df)
 subset_sub_tss
 
 subset_sub_tss.to_csv("C:/Egyetem/Szakmai_gyak/Data_tables/final_clust_data.csv", sep=";")
+
+subset_sub_tss.drop_duplicates(subset=None, inplace=True)
+subset_sub_tss
