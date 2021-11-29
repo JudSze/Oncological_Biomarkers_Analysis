@@ -1,6 +1,8 @@
 """Read in the normalized expression data, the jetset and the list of hallmarks, than checking the output of the read-in.
 Subsetting the jetset dataset based on hallmark gene names, than subsetting the normalized expression data based on hgu219 probe ids
 in the subsetted data. Saving the annotated hallmark genes expression data into a csv file
+
+Do not use dataframe with asigned subtissues due redundancies
 """
 
 import pandas as pd
