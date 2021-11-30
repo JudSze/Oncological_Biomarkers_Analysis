@@ -1,3 +1,10 @@
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ROC")
+BiocManager::install("ROCR")
+install.packages("hash")
+
 #Hosszú génlista transzpoz
 n <- beforecluster$Gene
 expression <- as.data.frame(t(beforecluster[,-1]))
@@ -57,7 +64,10 @@ MyAUC <- function(c, x){
   p <- 1 - pnorm((auc - 0.5) / s)
   return(c(AUC = auc, lower.95 = qnorm(0.025, mean = auc, sd = s), upper.95 = qnorm(0.975, mean = auc, sd = s), p = p))
 }
+
 #Futtatásonként itt cserélgeted az első tagot
+#Cell lines as IDs, status in test is binary response variable
+#First test with smaller datatable, than the bigger, that takes a tremendious amount of time
 merged <- merge(response_6_months, R_54e_base_for_run, by="AffyID")
 merged1 <- merged
 
@@ -121,3 +131,4 @@ for (j in index) {
 
 #Készít egy táblát, amiből majd ki tudunk még szedni dolgokat, ha szükség lesz rá.
 write.table(merged1, "ov6_2_new_TABLE.txt", append = TRUE, row.names = TRUE, col.name=TRUE)
+
