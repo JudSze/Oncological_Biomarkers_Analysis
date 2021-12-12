@@ -5,6 +5,9 @@ BiocManager::install("ROC")
 BiocManager::install("ROCR")
 install.packages("hash")
 
+library(ROC)
+library(ROCR)
+library(hash)
 #Hosszú génlista transzpoz
 n <- beforecluster$Gene
 expression <- as.data.frame(t(beforecluster[,-1]))
@@ -14,10 +17,6 @@ sample <- rownames(expression)
 rownames(expression) <- NULL
 expression <- cbind(sample,expression)
 
-#ezekre a csomagokra keress rá légyszi és előtte telepítsd
-library(ROC)
-library(ROCR)
-library(hash)
 MyAUC <- function(c, x){
   n <- length(c)
   n1 <- length(which(c == 1))
@@ -65,10 +64,13 @@ MyAUC <- function(c, x){
   return(c(AUC = auc, lower.95 = qnorm(0.025, mean = auc, sd = s), upper.95 = qnorm(0.975, mean = auc, sd = s), p = p))
 }
 
+setwd("C:/Egyetem/Szakmai_gyak/Data_tables")
+response_6_months=read.csv("C:/Egyetem/Szakmai_gyak/Data_tables/variance_analysis/df_6.csv", header=TRUE, sep=";")
+R_54e_base_for_run=read.csv("C:/Egyetem/Szakmai_gyak/Data_tables/trans_df.csv", header=TRUE, sep=";")
 #Futtatásonként itt cserélgeted az első tagot
 #Cell lines as IDs, status in test is binary response variable
 #First test with smaller datatable, than the bigger, that takes a tremendious amount of time
-merged <- merge(response_6_months, R_54e_base_for_run, by="AffyID")
+merged <- merge(response_6_months, R_54e_base_for_run, by="ID")
 merged1 <- merged
 
 state_vector <- merged1$response
@@ -128,7 +130,7 @@ for (j in index) {
   # Először elkészíti az eredményeket. Itt futtatásonként írd át, hogy melyik munkalapról származik.
   write.table(res, "ov6_2_new.txt", append = TRUE, row.names = TRUE, col.name=TRUE)
   }
-
+ 
 #Készít egy táblát, amiből majd ki tudunk még szedni dolgokat, ha szükség lesz rá.
 write.table(merged1, "ov6_2_new_TABLE.txt", append = TRUE, row.names = TRUE, col.name=TRUE)
 
