@@ -54,12 +54,3 @@ norm_df=pd.read_csv("C:/Egyetem/Szakmai_gyak/Data_tables/norm_exp_df.csv", sep="
 trans_df=norm_df.transpose()
 trans_df.head(5)
 trans_df.to_csv("C:/Egyetem/Szakmai_gyak/Data_tables/trans_df.csv", sep=";")
-
-"""Changing status values"""
-#Looking at cluster group 6
-df_6=pd.read_csv("C:/Egyetem/Szakmai_gyak/Data_tables/clustered_r.csv", sep=";")
-df_6.head(5)
-df_6.loc[df_6.ClustGroup == 6, "Status"]="1"
-df_6.loc[df_6.ClustGroup != 6 , "Status"]= "0"
-
-df_6.to_csv("C:/Egyetem/Szakmai_gyak/Data_tables/df_6.csv", sep=";")

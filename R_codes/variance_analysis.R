@@ -4,10 +4,13 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("ROC")
 BiocManager::install("ROCR")
 install.packages("hash")
+install.packages("rstatix")
 
 library(ROC)
 library(ROCR)
 library(hash)
+library(rstatix)
+library(car)
 #Hosszú génlista transzpoz
 n <- beforecluster$Gene
 expression <- as.data.frame(t(beforecluster[,-1]))
@@ -71,6 +74,7 @@ R_54e_base_for_run=read.csv("C:/Egyetem/Szakmai_gyak/Data_tables/trans_df.csv", 
 #Cell lines as IDs, status in test is binary response variable
 #First test with smaller datatable, than the bigger, that takes a tremendious amount of time
 merged <- merge(response_6_months, R_54e_base_for_run, by="ID")
+head(merged,3)
 merged1 <- merged
 
 state_vector <- merged1$response
@@ -134,3 +138,5 @@ for (j in index) {
 #Készít egy táblát, amiből majd ki tudunk még szedni dolgokat, ha szükség lesz rá.
 write.table(merged1, "ov6_2_new_TABLE.txt", append = TRUE, row.names = TRUE, col.name=TRUE)
 
+
+ 

@@ -38,10 +38,10 @@ hclust_analysis <- cluster_analysis(sel.exp=ranked.exprs,  #output of probe_rank
                                     distance="euclidean",  #distance metrics: euclidean-default, maximum, manhattan, canberra, binary, minkowski
                                     linkage_type="ward.D2",#ward.D2-default, average, complete, median, centroid, single, mcquitty
                                     gene_distance="correlation", #distance measure, can be set to NULL by Kmeans, correlation, abspearson, spearman, kendall, maximum, manhattan, eucledian
-                                    num_clusters=8,              #number of clusters defined by number_clusters() function
+                                    num_clusters=10,              #number of clusters defined by number_clusters() function
                                     data_name="Hallmarks",  #title of dataset
                                     probe_rank="SD_Rank",        #feautre selection method CV_Rank, CV_Guided SD_Rank, Poly
-                                    probe_num_selection="Fixed_Probe_Num",   #way in which probes were selected, Fixed/Percent/Poly/Adaptive_Probe_Num
+                                    probe_num_selection="10_Probe_Num",   #way in which probes were selected, Fixed/Percent/Poly/Adaptive_Probe_Num
                                     cluster_num_selection="Predefined_Clust_Num") #Fixed_Clust_Num, gap_Statistic
 
 head(hclust_analysis)
