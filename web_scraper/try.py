@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup as bs
 import requests
 import regex as re
 
-#definiálj egy listát és itt legyen üres
 global_list=[]
 
 def get_KEGG_links(url, x):
@@ -23,6 +22,6 @@ def get_KEGG_links(url, x):
     
     
 get_KEGG_links('https://www.gsea-msigdb.org/gsea/msigdb/genesets.jsp?collection=CP:KEGG', 'KEGG')
-#iratsd ki a listát
+
 
 print(global_list)
