@@ -2,8 +2,6 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup as bs
 import requests
 import regex as re
-import os
-import urllib
 import wget
 
 global_list=[]
