@@ -4,37 +4,52 @@ import requests
 import regex as re
 import wget
 import pandas as pd
-from pathlib import Path
+import pathlib 
 
 global_list=[]
+urls=[]
+KEGG_links=[]
+KEGG_list=[]
 
-def get_KEGG_links(url, x):
+def get_KEGG_links(url):
     #links for each KEGG pathway site
-    r=requests.get(url, 'html.parser')
+    r=requests.get(url)
     soup=bs(r.text, 'html.parser')
-    links=soup.findAll('a', string=re.compile(x))
+    for link in soup.find_all('a'):
+        l=link.get('href')
+        urls.append(l)
+    
+    #links=soup.findAll('a', string=re.compile(x))
     mod_url='https://www.gsea-msigdb.org/gsea/'
-    KEGG_links=[mod_url+link['href'] for link in links]
+    for link in urls:
+        link=str(link)
+        if 'KEGG' in link:
+            KEGG_links.append(mod_url+link)
+        else:
+            continue
     
-    #links for gene set text file
     for link in KEGG_links:
-        if link.endswith('txt'):
+        r=requests.get(link, 'html.parser')
+        soup=bs(r.text, 'html.parser')
+        links=soup.findAll('a', string=re.compile("text"))
+        mod_url='https://www.gsea-msigdb.org/gsea/'
+        for link in links:
+            KEGG_list.append(mod_url+link['href'])
             print(link)
-            global_list.append(link)
-        get_KEGG_links(link, 'text')
+        
+        
+        
     
     
-get_KEGG_links('https://www.gsea-msigdb.org/gsea/msigdb/genesets.jsp?collection=CP:KEGG', 'TRANSPORTERS')
-print(global_list)
+get_KEGG_links('https://www.gsea-msigdb.org/gsea/msigdb/genesets.jsp?collection=CP:KEGG')
+len(KEGG_list)
 
-for url in global_list:
+for url in KEGG_list:
     text_url=url
     name=str(url).replace("https://www.gsea-msigdb.org/gsea/msigdb/download_geneset.jsp?geneSetName=","").replace("=txt",".txt")
     path="C:/Egyetem/Szakmai_gyak/KEGG_pathways/"+name
     wget.download(text_url, path)
     
-len(global_list)
-
 #creating database out of all that information
 root_dir = pathlib.Path('C:/Egyetem/Szakmai_gyak/KEGG_pathways/')
 data = {}
